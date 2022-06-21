@@ -1,0 +1,59 @@
+.menu__list {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 24px;
+  row-gap: 32px;
+  justify-content: space-between;
+  padding-top: 24px;
+  padding-bottom: 48px;
+  padding-right: 8px;
+}
+.menu__item{
+  flex: 0 0 50%;
+  max-width: calc(50% - 40px);
+}
+.menu__card{
+  flex: 0 0 50%;
+  max-width: calc(50% - 24px);
+  text-align: center;
+  position: relative;
+}
+.menu__card img{
+  margin: 0 auto;
+}
+.menu__categories{
+  max-height: 676px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  margin-bottom: 32px;
+}
+.menu__category h3 {
+ font-size: 24px;
+ font-family: 'Iceland';
+}
+.menu__categories::-webkit-scrollbar {
+   width: 8px;
+   background-color: #2F2F37;
+}
+.menu__categories::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+  height: 492px;
+}
+
+.menu__price{
+  display: flex;
+  justify-content: center;
+  column-gap: 8px;
+  margin: 8px 0;
+}
+.buttonBox{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: 40px;
+}
+.buttonBox__total{
+  display: flex;
+  column-gap: 8px;
+}

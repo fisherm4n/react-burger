@@ -1,0 +1,29 @@
+
+.header__inner {
+display: grid;
+align-items: center;
+grid-template-columns: repeat(3, 1fr);
+}
+
+.header__tabs {
+  display: flex;
+  align-items: center;
+}
+
+.header__tab {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #8585AD;
+
+}
+.header__logo{
+  justify-self: center;
+}
+.header__link{
+  display: flex;
+  justify-self: flex-end;
+}
+.active {
+  color: #F2F2F3;
+}

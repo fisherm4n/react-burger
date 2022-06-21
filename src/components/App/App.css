@@ -1,0 +1,104 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+ul,
+ol {
+
+  padding: 0;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+.container{
+  max-width: 1260px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+.menu__title{
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+.menu {
+  padding-top: 40px;
+}
+.menu__inner {
+  display: flex;
+  column-gap: 40px;
+}
+.tab_tab__BUVcW{
+  width: 100%;
+}
+.menu .counter_counter__cYv1k {
+  right: 5px;
+}
+.burger-constructor_menu__list__n3JXg .constructor-element {
+  max-width: 100%;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-weight: 400;
+  font-style: normal;
+  src: url("../../fonts/JetBrainsMono-Regular.woff") format("woff");
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-weight: 700;
+  font-style: normal;
+  src: url("../../fonts/JetBrainsMono-Bold.woff") format("woff");
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Iceland';
+  font-weight: 400;
+  font-style: normal;
+  src: url("../../fonts/Iceland-Regular.woff") format("woff");
+  font-display: swap;
+}
