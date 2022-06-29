@@ -3,6 +3,7 @@ import ingredientsDetails from "./order-details.module.css";
 import {
   CheckMarkIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+
 function OrderDetails(props) {
 
   return (

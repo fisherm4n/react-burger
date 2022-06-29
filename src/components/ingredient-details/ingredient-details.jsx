@@ -42,6 +42,7 @@ function IngredientDetails(props) {
   );
 }
 IngredientDetails.propTypes = {
+  children: PropTypes.element.isRequired,
   data: PropTypes.arrayOf(
     PropTypes.shape({
       calories: PropTypes.number.isRequired,

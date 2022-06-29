@@ -1,5 +1,5 @@
 import React from 'react';
-import './app.css';
+import './App.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
@@ -35,6 +35,7 @@ function App() {
          if (res.ok) {
            return res.json();
          }
+         return Promise.reject(res.status);
        })
        .then((data) =>
          setState({ ...state, data: data.data, isLoading: false })
@@ -58,7 +59,7 @@ function App() {
             <div className="menu__inner">
               {isLoading && "Загрузка..."}
               {hasError && "Произошла ошибка"}
-              {!isLoading && !hasError && (
+              {!isLoading && !hasError && data.length && (
                 <BurgerIngredients
                   cardId={cardId}
                   handleOpenModal={handleOpenModal}
@@ -67,7 +68,7 @@ function App() {
                   data={data}
                 />
               )}
-              {!isLoading && !hasError && (
+              {!isLoading && !hasError && data.length && (
                 <BurgerConstructor
                   cardId={cardId}
                   handleOpenModal={handleOpenOrderModal}
