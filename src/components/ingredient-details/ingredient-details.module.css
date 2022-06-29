@@ -1,0 +1,43 @@
+.modal__properties {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 20px;
+}
+
+.modal__item {
+  flex: 0 0 120px;
+  text-align: center;
+  color: #8585AD;
+}
+
+.modal__name {
+ font-family: 'JetBrains Mono';
+ font-style: normal;
+ font-weight: 700;
+ font-size: 24px;
+ line-height: 30px;
+ text-align: center;
+ color: #F2F2F3;
+ text-align: center;
+ margin-bottom: 32px;
+}
+
+.modal__item span {
+  font-family: 'Iceland';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 24px;
+}
+.menu__item h2{
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 40px;
+  /* or 111% */
+
+  display: flex;
+  align-items: center;
+}

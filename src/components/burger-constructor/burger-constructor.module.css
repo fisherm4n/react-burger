@@ -2,15 +2,18 @@
   display: flex;
   flex-wrap: wrap;
   column-gap: 24px;
-  row-gap: 32px;
+  row-gap: 16px;
   justify-content: space-between;
-  padding-top: 24px;
-  padding-bottom: 48px;
   padding-right: 8px;
 }
+.menu__item_bun {
+  max-width: 510px;
+  width: 100%;
+  margin: 0 31px 0px auto;
+}
 .menu__item{
-  flex: 0 0 50%;
-  max-width: calc(50% - 40px);
+ max-width: 605px;
+  width: 100%;
 }
 .menu__card{
   flex: 0 0 50%;
@@ -21,10 +24,17 @@
 .menu__card img{
   margin: 0 auto;
 }
+.menu__list_2{
+ display: flex;
+ flex-wrap: wrap;
+ row-gap: 16px;
+    overflow-y: scroll;
+    max-height: 464px;
+
+}
 .menu__categories{
   max-height: 676px;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
   scrollbar-width: thin;
   margin-bottom: 32px;
 }
@@ -32,11 +42,11 @@
  font-size: 24px;
  font-family: 'Iceland';
 }
-.menu__categories::-webkit-scrollbar {
+.menu__list_2::-webkit-scrollbar {
    width: 8px;
    background-color: #2F2F37;
 }
-.menu__categories::-webkit-scrollbar-thumb {
+.menu__list_2::-webkit-scrollbar-thumb {
   background-color: #8585AD;
   height: 492px;
 }
@@ -56,4 +66,22 @@
 .buttonBox__total{
   display: flex;
   column-gap: 8px;
+}
+.order_main{
+  position: relative;
+  max-width: 514px;
+  width: 100%;
+  margin: 0 0 0 auto;
+}
+.order_main::before{
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background-image: url(../../images/order-cursor.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  left: -32px;
+  top: 50%;
+  transform: translateY(-50%);
 }
