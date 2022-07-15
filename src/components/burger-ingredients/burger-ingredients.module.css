@@ -16,6 +16,7 @@
   max-width: calc(50% - 24px);
   text-align: center;
   position: relative;
+  cursor: pointer;
 }
 .menu__card img{
   margin: 0 auto;
@@ -24,7 +25,7 @@
   max-height: 712px;
   overflow-x: hidden;
   overflow-y: scroll;
-  padding-top: 44px;
+  margin-top: 44px;
   scrollbar-width:thin;
 }
 .menu__category h3 {
