@@ -1,84 +1,110 @@
-import React from "react";
 import constructorSt from "./burger-constructor.module.css";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import {
   CurrencyIcon,
   ConstructorElement,
-  Button
+  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import React, { useMemo } from "react";
+import {
+  ADD_INGREDIENT_TO_CONSTRUCTOR,
+  ADD_BUN_TO_CONSTRUCTOR,
+} from "../../services/actions/ingredients";
+import { useDrop } from "react-dnd";
+
+import { useSelector, useDispatch } from "react-redux";
+import { handleChangeStatusModal } from "../../services/actions/popup";
+import BurgerConstructorItem from "./burger-constructor-item";
+import { v4 as uuidv4 } from "uuid";
+import { getOrderNumber } from "../../services/actions/ingredients";
 function BurgerConstructor(props) {
-  const { cardId, handleOpenModal, modal, modalState,data } = props;
-  console.log(data);
-  const total = props.data.reduce((acc, cur) => acc + cur.price, 0);
-  const cardTemplate = (card, index) => {
-    const { name, price, image_mobile, _id, type } = card;
-    return (
-    index > 0 && (
-      <li
-        key={_id}
-        className={constructorSt.order_main}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-          width: "100%",
-          marginRight: '15px'
-        }}
-      >
-       
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "10px",
-                  width: "100%",
-                }}
-              >
-                <ConstructorElement
-                  text={name}
-                  price={price}
-                  thumbnail={image_mobile}
-                />
-              </div>
-           
-      </li>
-       )
+  const { modalStatus, ingredient } = useSelector((store) => store.modal);
+  const dispatch = useDispatch();
+  const { constructorIngredients, currentBun } = useSelector(
+    (store) => store.ingredients
+  );
+  const [, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(item) {
+      if (item.type === "bun") {
+        console.log(item);
+        dispatch({
+          type: ADD_BUN_TO_CONSTRUCTOR,
+          draggedIngredient: item,
+        });
+      } else {
+        dispatch({
+          type: ADD_INGREDIENT_TO_CONSTRUCTOR,
+          payload: { ...item, _uid: uuidv4() },
+        });
+      }
+    },
+  });
+
+  const totalPrice =
+    useSelector((store) => store.ingredients.constructorIngredients).reduce(
+      (sum, { price }) => {
+        return sum + price;
+      },
+      0
+    ) + (currentBun ? currentBun.price * 2 : 0);
+
+  const topElement = useMemo(() => {
+    return currentBun ? (
+      <ConstructorElement
+        type="top"
+        isLocked={true}
+        text={`${currentBun.name} (верх)`}
+        price={currentBun.price}
+        thumbnail={currentBun.image}
+      />
+    ) : (
+      ""
     );
-  };
+  }, [currentBun]);
+
+  const bottomElement = useMemo(() => {
+    return currentBun ? (
+      <ConstructorElement
+        type="bottom"
+        isLocked={true}
+        text={`${currentBun.name} (низ)`}
+        price={currentBun.price}
+        thumbnail={currentBun.image}
+      />
+    ) : (
+      ""
+    );
+  }, [currentBun]);
 
   return (
     <div className={constructorSt.menu__item}>
       <div className={constructorSt.menu__categories}>
-        <div className={constructorSt.menu__category}>
+        <div ref={dropTarget} className={constructorSt.menu__category}>
           <ul className={`${constructorSt.menu__list}`}>
             {
               <li className={`${constructorSt.menu__item_bun}`}>
-                <ConstructorElement
-                  type="top"
-                  text={`${props.data[0]?.name} (верх) `}
-                  price={props.data[0]?.price}
-                  isLocked={true}
-                  thumbnail={props.data[0]?.image_mobile}
-                />
+                {topElement}
               </li>
             }
             <li>
               <ul className={`${constructorSt.menu__list_2}`}>
-                {props.data.map((card, index) => cardTemplate(card, index))}
+                {constructorIngredients.map((item, index) => (
+                  <BurgerConstructorItem
+                    item={item}
+                    key={item._uid}
+                    uid={item._uid}
+                    index={index}
+                  />
+                ))}
               </ul>
             </li>
 
             {
               <li className={`${constructorSt.menu__item_bun}`}>
-                <ConstructorElement
-                  type="bottom"
-                  text={`${props.data[0]?.name} (низ) `}
-                  price={props.data[0]?.price}
-                  isLocked={true}
-                  thumbnail={props.data[0]?.image_mobile}
-                />
+                {bottomElement}
               </li>
             }
           </ul>
@@ -86,27 +112,38 @@ function BurgerConstructor(props) {
       </div>
       <div className={constructorSt.buttonBox}>
         <div className={constructorSt.buttonBox__total}>
-          <span>{total}</span>
+          <span>{totalPrice}</span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="large" onClick={() => handleOpenModal()}>
-         Оформить заказ
+        <Button
+          type="primary"
+          size="large"
+          onClick={() => {
+            if (currentBun != null && constructorIngredients.length > 0) {
+              dispatch(
+                getOrderNumber([
+                  currentBun,
+                  ...constructorIngredients,
+                  currentBun,
+                ])
+              );
+              dispatch(handleChangeStatusModal(null, true));
+            }
+          }}
+        >
+          Оформить заказ
         </Button>
       </div>
-      {modal && (
-        <Modal modalState={modalState}>
-          <OrderDetails
-            cardId={cardId}
-            orderNum={"0S34536"}
-            data={props.data}
-          />
+      {modalStatus && ingredient === null && (
+        <Modal>
+          <OrderDetails />
         </Modal>
       )}
     </div>
   );
 }
 BurgerConstructor.propTypes = {
-  handleOpenModal: PropTypes.func.isRequired,
+  handleOpenModal: PropTypes.func,
   data: PropTypes.arrayOf(
     PropTypes.shape({
       calories: PropTypes.number.isRequired,
@@ -122,6 +159,6 @@ BurgerConstructor.propTypes = {
       __v: PropTypes.number,
       _id: PropTypes.string.isRequired,
     })
-  ).isRequired,
+  ),
 };
 export default BurgerConstructor;

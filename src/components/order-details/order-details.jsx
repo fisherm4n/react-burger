@@ -1,16 +1,16 @@
 import React from "react";
 import ingredientsDetails from "./order-details.module.css";
-import {
-  CheckMarkIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
+import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector } from "react-redux";
 
-function OrderDetails(props) {
-
+function OrderDetails() {
+  const orderNumber = useSelector(
+    (store) => store.ingredients.order.orderNumber
+  );
   return (
     <>
       <div className={ingredientsDetails.modal__inner}>
-        <h3 className={ingredientsDetails.modal__title}>{props.orderNum}</h3>
+        <h3 className={ingredientsDetails.modal__title}>{orderNumber}</h3>
         <p>идентификатор заказа</p>
         <div className={ingredientsDetails.modal__checkmark}>
           <CheckMarkIcon type="primary" />
@@ -27,7 +27,4 @@ function OrderDetails(props) {
     </>
   );
 }
-OrderDetails.propTypes = {
-  orderNum: PropTypes.string.isRequired,
-};
 export default OrderDetails;

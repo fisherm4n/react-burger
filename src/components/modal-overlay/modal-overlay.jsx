@@ -1,13 +1,16 @@
-import React from "react";
-import ReactDOM from "react-dom";
 import overlaySt from "./overlay.module.css";
 import PropTypes from "prop-types";
-
+import { useDispatch } from "react-redux";
+import { handleChangeStatusModal } from "../../services/actions/popup";
 function ModalOverlay(props) {
-  const { children, modalState } = props;
+  const { children } = props;
+  const dispatch = useDispatch();
   return (
     <>
-      <div className={overlaySt.modal} onClick={() => modalState(false)}>
+      <div
+        className={overlaySt.modal}
+        onClick={() => dispatch(handleChangeStatusModal(null, false))}
+      >
         {children}
       </div>
     </>
@@ -15,6 +18,5 @@ function ModalOverlay(props) {
 }
 ModalOverlay.propTypes = {
   children: PropTypes.element.isRequired,
-  modalState: PropTypes.func.isRequired,
 };
 export default ModalOverlay;
