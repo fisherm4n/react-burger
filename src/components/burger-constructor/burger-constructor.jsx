@@ -18,8 +18,10 @@ import { useSelector, useDispatch } from "react-redux";
 import BurgerConstructorItem from "./burger-constructor-item";
 import { v4 as uuidv4 } from "uuid";
 import { getOrderNumber } from "../../services/actions/ingredients";
-import { openOrderModal } from "../../services/actions/modal";
-import { CLOSE_MODAL_ORDER } from "../../services/actions/ingredients";
+import {
+  CLOSE_MODAL_ORDER,
+  OPEN_MODAL_ORDER,
+} from "../../services/actions/ingredients";
 function BurgerConstructor() {
   const { orderNumberStatus } = useSelector((store) => store.modalOrder);
   const dispatch = useDispatch();
@@ -81,7 +83,7 @@ function BurgerConstructor() {
       ""
     );
   }, [currentBun]);
-
+  const openOrderModal = () => dispatch({ type: OPEN_MODAL_ORDER });
   return (
     <div className={constructorSt.menu__item}>
       <div className={constructorSt.menu__categories}>

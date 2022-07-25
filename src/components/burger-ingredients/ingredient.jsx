@@ -7,8 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { ingredientsPropTypes } from "../../utils/types";
-import { openIngredientModal } from "../../services/actions/modal";
-
+import { OPEN_MODAL_INGREDIENT } from "../../services/actions/ingredients";
 function Ingredient(props) {
   const { _id, image, price, name } = props.ingredient;
   const ingredients = useSelector(
@@ -33,11 +32,13 @@ function Ingredient(props) {
       ? 2
       : 0;
   const dispatch = useDispatch();
-
+  const openIngredientModal = (ingredient) => {
+    dispatch({ type: OPEN_MODAL_INGREDIENT, payload: ingredient });
+  };
   return (
     <li
       ref={dragRef}
-      onClick={() => dispatch(openIngredientModal(props.ingredient))}
+      onClick={() => openIngredientModal(props.ingredient)}
       className={ingredientsSt.menu__card}
     >
       {conditionCount && <Counter count={length} size="default" />}
