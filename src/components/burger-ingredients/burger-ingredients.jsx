@@ -5,10 +5,13 @@ import Modal from "../modal/modal";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
 import Ingredient from "./ingredient";
+import { useDispatch } from "react-redux";
+import { CLOSE_MODAL_INGREDIENT } from "../../services/actions/ingredients";
+function BurgerIngredients() {
+  const dispatch = useDispatch();
 
-function BurgerIngredients(props) {
   const { ingredients } = useSelector((store) => store.ingredients);
-  const { ingredient, modalStatus } = useSelector((store) => store.modal);
+  const { ingredient } = useSelector((store) => store.modal);
   const [tab, setTab] = useState("buns");
 
   const ingredientsBlockRef = useRef(null);
@@ -17,12 +20,12 @@ function BurgerIngredients(props) {
   const fillingsTitleRef = useRef(null);
 
   const onTabClick = (value, ref) => {
-    console.log(value);
     setTab(value);
-    console.log(ref.current);
     ref.current.scrollIntoView({ behavior: "smooth" });
   };
   const onScrollIngredientsBlock = () => {
+    console.log("scrolling");
+
     if (bunsTitleRef.current.getBoundingClientRect().top >= 0) {
       setTab("buns");
     } else if (sauceTitleRef.current.getBoundingClientRect().top >= 0) {
@@ -31,14 +34,13 @@ function BurgerIngredients(props) {
       setTab("fillings");
     }
   };
-
+  const closeIngredientModal = () => dispatch({ type: CLOSE_MODAL_INGREDIENT });
   useEffect(() => {
     const ingredientsScrollableDOMElement = ingredientsBlockRef.current;
     ingredientsScrollableDOMElement.addEventListener(
       "scroll",
       onScrollIngredientsBlock
     );
-
     return () =>
       ingredientsScrollableDOMElement.removeEventListener(
         "scroll",
@@ -46,7 +48,7 @@ function BurgerIngredients(props) {
       );
   }, []);
   return (
-    <div className={ingredientsSt.menu__item} ref={ingredientsBlockRef}>
+    <div className={ingredientsSt.menu__item}>
       <div style={{ display: "flex" }}>
         <Tab
           value="buns"
@@ -73,7 +75,7 @@ function BurgerIngredients(props) {
           Начинки
         </Tab>
       </div>
-      <div className={ingredientsSt.menu__categories}>
+      <div className={ingredientsSt.menu__categories} ref={ingredientsBlockRef}>
         <div className={ingredientsSt.menu__category} ref={bunsTitleRef}>
           <h3>Булки</h3>
           <ul className={`${ingredientsSt.menu__list}`}>
@@ -120,8 +122,8 @@ function BurgerIngredients(props) {
           </ul>
         </div>
       </div>
-      {ingredient && modalStatus && (
-        <Modal>
+      {ingredient && (
+        <Modal onClose={closeIngredientModal}>
           <IngredientDetails cardId={ingredient._id} />
         </Modal>
       )}

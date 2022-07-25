@@ -5,8 +5,9 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { handleChangeStatusModal } from "../../services/actions/popup";
+
 import { ingredientsPropTypes } from "../../utils/types";
+import { openIngredientModal } from "../../services/actions/modal";
 
 function Ingredient(props) {
   const { _id, image, price, name } = props.ingredient;
@@ -36,7 +37,7 @@ function Ingredient(props) {
   return (
     <li
       ref={dragRef}
-      onClick={() => dispatch(handleChangeStatusModal(props.ingredient, true))}
+      onClick={() => dispatch(openIngredientModal(props.ingredient))}
       className={ingredientsSt.menu__card}
     >
       {conditionCount && <Counter count={length} size="default" />}

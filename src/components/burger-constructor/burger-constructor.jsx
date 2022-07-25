@@ -1,7 +1,6 @@
 import constructorSt from "./burger-constructor.module.css";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
-import PropTypes from "prop-types";
 import {
   CurrencyIcon,
   ConstructorElement,
@@ -15,12 +14,14 @@ import {
 import { useDrop } from "react-dnd";
 
 import { useSelector, useDispatch } from "react-redux";
-import { handleChangeStatusModal } from "../../services/actions/popup";
+// import { handleChangeStatusModal } from "../../services/actions/popup";
 import BurgerConstructorItem from "./burger-constructor-item";
 import { v4 as uuidv4 } from "uuid";
 import { getOrderNumber } from "../../services/actions/ingredients";
-function BurgerConstructor(props) {
-  const { modalStatus, ingredient } = useSelector((store) => store.modal);
+import { openOrderModal } from "../../services/actions/modal";
+import { CLOSE_MODAL_ORDER } from "../../services/actions/ingredients";
+function BurgerConstructor() {
+  const { orderNumberStatus } = useSelector((store) => store.modalOrder);
   const dispatch = useDispatch();
   const { constructorIngredients, currentBun } = useSelector(
     (store) => store.ingredients
@@ -29,7 +30,6 @@ function BurgerConstructor(props) {
     accept: "ingredient",
     drop(item) {
       if (item.type === "bun") {
-        console.log(item);
         dispatch({
           type: ADD_BUN_TO_CONSTRUCTOR,
           draggedIngredient: item,
@@ -42,7 +42,10 @@ function BurgerConstructor(props) {
       }
     },
   });
-
+  const closeOrderModal = () =>
+    dispatch({
+      type: CLOSE_MODAL_ORDER,
+    });
   const totalPrice =
     useSelector((store) => store.ingredients.constructorIngredients).reduce(
       (sum, { price }) => {
@@ -127,38 +130,19 @@ function BurgerConstructor(props) {
                   currentBun,
                 ])
               );
-              dispatch(handleChangeStatusModal(null, true));
+              dispatch(openOrderModal(true));
             }
           }}
         >
           Оформить заказ
         </Button>
       </div>
-      {modalStatus && ingredient === null && (
-        <Modal>
+      {orderNumberStatus && (
+        <Modal onClose={closeOrderModal}>
           <OrderDetails />
         </Modal>
       )}
     </div>
   );
 }
-BurgerConstructor.propTypes = {
-  handleOpenModal: PropTypes.func,
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      calories: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      proteins: PropTypes.number.isRequired,
-      type: PropTypes.string.isRequired,
-      __v: PropTypes.number,
-      _id: PropTypes.string.isRequired,
-    })
-  ),
-};
 export default BurgerConstructor;

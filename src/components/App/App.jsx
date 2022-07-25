@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import AppStyle from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
@@ -19,18 +19,17 @@ function App() {
   return (
     <div>
       <AppHeader />
-      <main className="main">
+      <main className={AppStyle.main}>
         <div className="container">
-          <section className="menu">
-            <h1 className="menu__title">Соберите бургер</h1>
-            <div className="menu__inner">
+          <section className={AppStyle.menu}>
+            <h1 className={AppStyle.menu__title}>Соберите бургер</h1>
+            <div className={AppStyle.menu__inner}>
               {isLoading && "Загрузка..."}
               {hasError && "Произошла ошибка"}
               {!isLoading && !hasError && ingredients.length && (
                 <DndProvider backend={HTML5Backend}>
                   <BurgerIngredients />
-
-                  <BurgerConstructor data={ingredients} />
+                  <BurgerConstructor />
                 </DndProvider>
               )}
             </div>

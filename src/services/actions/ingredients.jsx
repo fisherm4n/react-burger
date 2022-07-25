@@ -18,20 +18,24 @@ export const CLEAR_CONSTRUCTOR = "CLEAR_CONSTRUCTOR";
 export const DELETE_BUN_FROM_CONSTRUCTOR = "DELETE_BUN_FROM_CONSTRUCTOR";
 export const GET_ORDER_NUMBER_FAILED = "GET_ORDER_NUMBER_FAILED";
 export const REPLACE_INGREDIENTS = "REPLACE_INGREDIENTS";
-
+export const CLOSE_MODAL_INGREDIENT = "CLOSE_MODAL_INGREDIENT";
+export const OPEN_MODAL_INGREDIENT = "OPEN_MODAL_INGREDIENT";
+export const OPEN_MODAL_ORDER = "OPEN_MODAL_ORDER";
+export const CLOSE_MODAL_ORDER = "CLOSE_MODAL_ORDER";
 const API = "https://norma.nomoreparties.space/api";
+const checkResponse = (res) => {
+  if (res && res.ok) {
+    return res.json();
+  }
+  return Promise.reject(new Error(res.statusText));
+};
 export const getIngredients = () => (dispatch) => {
   dispatch({
     type: GET_INGREDIENTS,
   });
 
   fetch(`${API}/ingredients`)
-    .then((res) => {
-      if (res && res.ok) {
-        return res.json();
-      }
-      return Promise.reject(new Error(res.statusText));
-    })
+    .then(checkResponse)
     .then((data) => {
       if (data.success) {
         dispatch({
@@ -67,9 +71,8 @@ export function getOrderNumber(ingredients) {
       },
       body: JSON.stringify(data),
     })
-      .then((response) => response.json())
+      .then(checkResponse)
       .then((data) => {
-        console.log(data);
         dispatch({
           type: GET_ORDER_NUMBER_SUCCESS,
           orderNumber: data.order.number,
