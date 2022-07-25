@@ -1,5 +1,7 @@
 import ingredientsSt2 from "./ingredient-details.module.css";
 import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
+
 function IngredientDetails(props) {
   const { cardId } = props;
   const { ingredients } = useSelector((store) => store.ingredients);
@@ -38,4 +40,7 @@ function IngredientDetails(props) {
     </div>
   );
 }
+IngredientDetails.propTypes = {
+  cardId: PropTypes.string.isRequired,
+};
 export default IngredientDetails;

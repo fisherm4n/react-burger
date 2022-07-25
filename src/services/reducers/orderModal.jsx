@@ -5,7 +5,6 @@ const initialState = {
 const modalOrderReducer = (state = initialState, action) => {
   switch (action.type) {
     case OPEN_MODAL_ORDER:
-      console.log("sukaTYgde");
       return {
         ...state,
         orderNumberStatus: true,

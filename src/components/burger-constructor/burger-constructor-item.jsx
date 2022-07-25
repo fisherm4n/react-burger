@@ -94,6 +94,7 @@ function BurgerConstructorItem(props) {
 BurgerConstructorItem.propTypes = {
   item: ingredientsPropTypes.isRequired,
   index: PropTypes.number.isRequired,
+  uid: PropTypes.string.isRequired,
 };
 
 export default BurgerConstructorItem;

@@ -5,6 +5,7 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
 
 import { ingredientsPropTypes } from "../../utils/types";
 import { OPEN_MODAL_INGREDIENT } from "../../services/actions/ingredients";
@@ -52,5 +53,6 @@ function Ingredient(props) {
 }
 Ingredient.propTypes = {
   ingredient: ingredientsPropTypes.isRequired,
+  type: PropTypes.string.isRequired,
 };
 export default Ingredient;

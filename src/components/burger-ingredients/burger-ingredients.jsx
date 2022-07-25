@@ -24,8 +24,6 @@ function BurgerIngredients() {
     ref.current.scrollIntoView({ behavior: "smooth" });
   };
   const onScrollIngredientsBlock = () => {
-    console.log("scrolling");
-
     if (bunsTitleRef.current.getBoundingClientRect().top >= 0) {
       setTab("buns");
     } else if (sauceTitleRef.current.getBoundingClientRect().top >= 0) {
