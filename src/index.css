@@ -1,5 +1,3 @@
-
-
 html {
   box-sizing: border-box;
 }
@@ -62,10 +60,19 @@ select {
   margin: 0 auto;
   padding: 0 10px;
 }
+
 body {
   font-family: 'Jet Brains Mono';
   font-size: 16px;
   line-height: 1.5;
   font-weight: normal;
   color: #F2F2F3;
+}
+
+.tab_tab__Hbo8I {
+  width: 100%;
+}
+
+.constructor-element {
+  max-width: 548px !important;
 }
