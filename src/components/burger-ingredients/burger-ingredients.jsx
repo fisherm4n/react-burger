@@ -47,12 +47,13 @@ function BurgerIngredients() {
   }, []);
   return (
     <div className={ingredientsSt.menu__item}>
+      <h1 className={ingredientsSt.menu__title}>Соберите бургер</h1>
+
       <div style={{ display: "flex" }}>
         <Tab
           value="buns"
           active={tab === "buns"}
           onClick={(e) => {
-            console.log(e);
             return onTabClick(e, bunsTitleRef);
           }}
         >
@@ -120,11 +121,11 @@ function BurgerIngredients() {
           </ul>
         </div>
       </div>
-      {ingredient && (
+      {/* {ingredient && (
         <Modal onClose={closeIngredientModal}>
           <IngredientDetails cardId={ingredient._id} />
         </Modal>
-      )}
+      )} */}
     </div>
   );
 }

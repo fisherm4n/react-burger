@@ -9,12 +9,13 @@ import PropTypes from "prop-types";
 
 import { ingredientsPropTypes } from "../../utils/types";
 import { OPEN_MODAL_INGREDIENT } from "../../services/actions/ingredients";
+import { Link, useLocation } from "react-router-dom";
 function Ingredient(props) {
   const { _id, image, price, name } = props.ingredient;
   const ingredients = useSelector(
     (store) => store.ingredients.constructorIngredients
   ).filter((item) => item._id === _id);
-
+  const location = useLocation();
   const currentBun = [
     useSelector((store) => store.ingredients.currentBun),
   ].filter((item) => item && item._id === _id);
@@ -32,22 +33,24 @@ function Ingredient(props) {
       : currentBun.length > 0
       ? 2
       : 0;
-  const dispatch = useDispatch();
-  const openIngredientModal = (ingredient) => {
-    dispatch({ type: OPEN_MODAL_INGREDIENT, payload: ingredient });
-  };
+
   return (
-    <li
-      ref={dragRef}
-      onClick={() => openIngredientModal(props.ingredient)}
-      className={ingredientsSt.menu__card}
-    >
-      {conditionCount && <Counter count={length} size="default" />}
-      <img src={image} alt="" />
-      <div className={ingredientsSt.menu__price}>
-        {price} <CurrencyIcon type="primary" />
-      </div>
-      <div>{name}</div>
+    <li ref={dragRef} className={ingredientsSt.menu__card}>
+      <Link
+        to={{
+          // Тут мы формируем динамический путь для нашего ингредиента
+          // а также сохраняем в свойство background роут, на котором была открыта наша модалка
+          pathname: `/ingredients/${_id}`,
+          state: { background: location },
+        }}
+      >
+        {conditionCount && <Counter count={length} size="default" />}
+        <img src={image} alt="" />
+        <div className={ingredientsSt.menu__price}>
+          {price} <CurrencyIcon type="primary" />
+        </div>
+        <div>{name}</div>
+      </Link>
     </li>
   );
 }

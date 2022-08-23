@@ -1,0 +1,61 @@
+.container {
+  display: grid;
+  align-items: flex-start;
+  grid-template-columns: 380px 480px;
+  margin-left: auto;
+  margin-right: auto;
+  margin: 15vh auto auto auto;
+  max-width: 880px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 480px;
+}
+
+.form>div {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.form>div>div {
+  width: 100%;
+}
+
+.buttonsContainer {
+  display: flex;
+}
+
+.buttonsContainer button {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container_navigate {
+  width: 320px;
+}
+
+.button {
+  display: flex;
+  text-decoration: none;
+}
+
+.button_text {
+  display: flex;
+  height: 64px;
+  text-align: left;
+  align-items: center;
+  color: #8585ad;
+}
+
+.button_active {
+  color: #f2f2f2;
+}
+
+.description {
+  display: flex;
+  width: 280px;
+  margin-top: 80px;
+}

@@ -15,6 +15,7 @@ const initialState = {
   ingredients: [],
   isLoading: false,
   hasError: false,
+  currentBun: null,
   constructorIngredients: [],
   order: {
     orderNumber: 0,

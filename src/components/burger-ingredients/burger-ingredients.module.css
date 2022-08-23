@@ -1,3 +1,8 @@
+.menu__title {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
 .menu__list {
   display: flex;
   flex-wrap: wrap;

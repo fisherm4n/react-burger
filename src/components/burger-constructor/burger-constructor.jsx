@@ -22,9 +22,14 @@ import {
   CLOSE_MODAL_ORDER,
   OPEN_MODAL_ORDER,
 } from "../../services/actions/ingredients";
+import { useHistory } from "react-router-dom";
+
 function BurgerConstructor() {
+  const { userInfo } = useSelector((store) => store.user);
+
   const { orderNumberStatus } = useSelector((store) => store.modalOrder);
   const dispatch = useDispatch();
+  const history = useHistory();
   const { constructorIngredients, currentBun } = useSelector(
     (store) => store.ingredients
   );
@@ -124,6 +129,9 @@ function BurgerConstructor() {
           type="primary"
           size="large"
           onClick={() => {
+            if (!userInfo) {
+              return history.push("/login");
+            }
             if (currentBun != null && constructorIngredients.length > 0) {
               dispatch(
                 getOrderNumber([
