@@ -15,18 +15,19 @@ export function ForgotPasswordPage() {
   };
   const onSumbit = async (e) => {
     e.preventDefault();
-    const response = forgotPasswordRequest(email);
-    getRequestStatus(response);
+    const response = await forgotPasswordRequest(email);
+    getRequestStatus(response.success);
   };
   useEffect(() => {
     if (requestStatus) {
       history.push({
-        pathname: "/reset-password",
-        state: {
-          email,
-        },
+          pathname: "/reset-password",
+          state: {
+              from: "/forgot-password",
+          },
       });
     }
+    console.log(history);
   }, [email, requestStatus, history]);
   return (
     <>

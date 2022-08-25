@@ -48,76 +48,74 @@ export function ProfilePage() {
   const [isEdit, setIsEdit] = useState(false);
 
   return (
-    <>
-      <div className={styles.container}>
-        <div className={styles.container_navigate}>
-          <NavLink
-            to="/profile"
-            activeClassName={styles.button_active}
-            className={`${styles.button_text} text text_type_main-medium`}
-          >
-            Профиль
-          </NavLink>
-          <NavLink
-            to="/profile/orders"
-            activeClassName={styles.button_active}
-            className={`${styles.button_text} text text_type_main-medium`}
-          >
-            История заказов
-          </NavLink>
-          <NavLink
-            to="/login"
-            onClick={handleLogOut}
-            activeClassName={styles.button_active}
-            className={`${styles.button_text} text text_type_main-medium`}
-          >
-            Выход
-          </NavLink>
-        </div>
-        <form className={styles.form} onSubmit={formSubmit}>
-          <Input
-            type={"text"}
-            placeholder={"Имя"}
-            value={values.name}
-            onChange={handleChangeValues}
-            name={"name"}
-            icon={"EditIcon"}
-            disabled={!isEdit}
-            onIconClick={() => setIsEdit(true)}
-          />
-          <Input
-            type={"email"}
-            placeholder={"Логин"}
-            value={values.email}
-            onChange={handleChangeValues}
-            name={"email"}
-            icon={"EditIcon"}
-            disabled={!isEdit}
-            onIconClick={() => setIsEdit(true)}
-          />
-          <Input
-            type={"password"}
-            placeholder={"Пароль"}
-            value={values.password}
-            onChange={handleChangeValues}
-            icon={"LockIcon"}
-            name={"password"}
-            autocomplete={"off"}
-            readonly
-            disabled
-          />
-          {isEdit && (
-            <div className={styles.buttonsContainer}>
-              <Button size="medium" onClick={() => setIsEdit(false)}>
-                Отмена
-              </Button>
-              <Button size="medium" disabled={userInfoRequest}>
-                Сохранить
-              </Button>
-            </div>
-          )}
-        </form>
+    <div className={styles.container}>
+      <div className={styles.container_navigate}>
+        <NavLink
+          to="/profile"
+          activeClassName={styles.button_active}
+          className={`${styles.button_text} text text_type_main-medium`}
+        >
+          Профиль
+        </NavLink>
+        <NavLink
+          to="/profile/orders"
+          activeClassName={styles.button_active}
+          className={`${styles.button_text} text text_type_main-medium`}
+        >
+          История заказов
+        </NavLink>
+        <NavLink
+          to="/login"
+          onClick={handleLogOut}
+          activeClassName={styles.button_active}
+          className={`${styles.button_text} text text_type_main-medium`}
+        >
+          Выход
+        </NavLink>
       </div>
-    </>
+      <form className={styles.form} onSubmit={formSubmit}>
+        <Input
+          type={"text"}
+          placeholder={"Имя"}
+          value={values.name}
+          onChange={handleChangeValues}
+          name={"name"}
+          icon={"EditIcon"}
+          disabled={!isEdit}
+          onIconClick={() => setIsEdit(true)}
+        />
+        <Input
+          type={"email"}
+          placeholder={"Логин"}
+          value={values.email}
+          onChange={handleChangeValues}
+          name={"email"}
+          icon={"EditIcon"}
+          disabled={!isEdit}
+          onIconClick={() => setIsEdit(true)}
+        />
+        <Input
+          type={"password"}
+          placeholder={"Пароль"}
+          value={values.password}
+          onChange={handleChangeValues}
+          icon={"LockIcon"}
+          name={"password"}
+          autocomplete={"off"}
+          readonly
+          disabled
+        />
+        {isEdit && (
+          <div className={styles.buttonsContainer}>
+            <Button size="medium" onClick={() => setIsEdit(false)}>
+              Отмена
+            </Button>
+            <Button size="medium" disabled={userInfoRequest}>
+              Сохранить
+            </Button>
+          </div>
+        )}
+      </form>
+    </div>
   );
 }
