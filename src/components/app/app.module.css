@@ -1,22 +1,21 @@
-
-.menu__title{
-  font-size: 36px;
-  margin-bottom: 20px;
-}
 .menu {
   padding-top: 40px;
 }
+
 .menu__inner {
   display: flex;
   column-gap: 40px;
-      justify-content: space-between;
+  justify-content: space-between;
 }
-.tab_tab__BUVcW{
+
+.tab_tab__BUVcW {
   width: 100%;
 }
+
 .menu .counter_counter__cYv1k {
   right: 5px;
 }
+
 .burger-constructor_menu__list__n3JXg .constructor-element {
   max-width: 100%;
 }
@@ -28,6 +27,7 @@
   src: url("../../fonts/JetBrainsMono-Regular.woff") format("woff");
   font-display: swap;
 }
+
 @font-face {
   font-family: 'JetBrains Mono';
   font-weight: 700;
@@ -35,6 +35,7 @@
   src: url("../../fonts/JetBrainsMono-Bold.woff") format("woff");
   font-display: swap;
 }
+
 @font-face {
   font-family: 'Iceland';
   font-weight: 400;

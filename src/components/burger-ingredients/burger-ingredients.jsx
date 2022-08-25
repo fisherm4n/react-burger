@@ -1,112 +1,133 @@
-import React from "react";
-import useMemo from "react";
+import React, { useRef, useState, useEffect } from "react";
 import ingredientsSt from "./burger-ingredients.module.css";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import {
-  Tab,
-  CurrencyIcon,
-  Counter,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector } from "react-redux";
+import Ingredient from "./ingredient";
+import { useDispatch } from "react-redux";
+import { CLOSE_MODAL_INGREDIENT } from "../../services/actions/ingredients";
+function BurgerIngredients() {
+  const dispatch = useDispatch();
 
-function BurgerIngredients(props) {
-  const [current, setCurrent] = React.useState("bun");
-  const {cardId,handleOpenModal, modal,modalState,data} = props
-  const onTabSmooth = (tab) => {
-    setCurrent(tab)
-    const element = document.getElementById(tab);
-    if(element){
-      element.scrollIntoView({behavior: "smooth"})
-    }
-  }
- 
-  const cardTemplate = ({ name, price, image,_id }) => {
-    return (
-      <li
-        onClick={() => handleOpenModal(_id)}
-        key={_id}
-        className={ingredientsSt.menu__card}
-      >
-        <Counter count={1} size="default" />
-        <img src={image} alt="" />
-        <div className={ingredientsSt.menu__price}>
-          {price} <CurrencyIcon type="primary" />
-        </div>
-        <div>{name}</div>
-      </li>
-    );
+  const { ingredients } = useSelector((store) => store.ingredients);
+  const { ingredient } = useSelector((store) => store.modal);
+  const [tab, setTab] = useState("buns");
+
+  const ingredientsBlockRef = useRef(null);
+  const bunsTitleRef = useRef(null);
+  const sauceTitleRef = useRef(null);
+  const fillingsTitleRef = useRef(null);
+
+  const onTabClick = (value, ref) => {
+    setTab(value);
+    ref.current.scrollIntoView({ behavior: "smooth" });
   };
-
- 
-
-
+  const onScrollIngredientsBlock = () => {
+    if (bunsTitleRef.current.getBoundingClientRect().top >= 0) {
+      setTab("buns");
+    } else if (sauceTitleRef.current.getBoundingClientRect().top >= 0) {
+      setTab("sauces");
+    } else if (fillingsTitleRef.current.getBoundingClientRect().top >= 0) {
+      setTab("fillings");
+    }
+  };
+  const closeIngredientModal = () => dispatch({ type: CLOSE_MODAL_INGREDIENT });
+  useEffect(() => {
+    const ingredientsScrollableDOMElement = ingredientsBlockRef.current;
+    ingredientsScrollableDOMElement.addEventListener(
+      "scroll",
+      onScrollIngredientsBlock
+    );
+    return () =>
+      ingredientsScrollableDOMElement.removeEventListener(
+        "scroll",
+        onScrollIngredientsBlock
+      );
+  }, []);
   return (
     <div className={ingredientsSt.menu__item}>
+      <h1 className={ingredientsSt.menu__title}>Соберите бургер</h1>
+
       <div style={{ display: "flex" }}>
-        <Tab value="bun" active={current === "bun"} onClick={setCurrent}>
+        <Tab
+          value="buns"
+          active={tab === "buns"}
+          onClick={(e) => {
+            return onTabClick(e, bunsTitleRef);
+          }}
+        >
           Булки
         </Tab>
-        <Tab value="sauce" active={current === "sauce"} onClick={setCurrent}>
+        <Tab
+          value="sauces"
+          active={tab === "sauces"}
+          onClick={(e) => onTabClick(e, sauceTitleRef)}
+        >
           Соусы
         </Tab>
-        <Tab value="main" active={current === "main"} onClick={setCurrent}>
+        <Tab
+          value="fillings"
+          active={tab === "fillings"}
+          onClick={(e) => onTabClick(e, fillingsTitleRef)}
+        >
           Начинки
         </Tab>
       </div>
-      <div className={ingredientsSt.menu__categories}>
-        <div className={ingredientsSt.menu__category}>
+      <div className={ingredientsSt.menu__categories} ref={ingredientsBlockRef}>
+        <div className={ingredientsSt.menu__category} ref={bunsTitleRef}>
           <h3>Булки</h3>
           <ul className={`${ingredientsSt.menu__list}`}>
-            {props.data.map(
-              (card, index) => card.type === "bun" && cardTemplate(card, index)
+            {ingredients.map(
+              (card) =>
+                card.type === "bun" && (
+                  <Ingredient
+                    key={card._id}
+                    type={card.type}
+                    ingredient={card}
+                  />
+                )
             )}
           </ul>
         </div>
-        <div className={ingredientsSt.menu__category}>
+        <div className={ingredientsSt.menu__category} ref={sauceTitleRef}>
           <h3>Соусы</h3>
           <ul className={`${ingredientsSt.menu__list}`}>
-            {props.data.map(
-              (card, index) =>
-                card.type === "sauce" && cardTemplate(card, index)
+            {ingredients.map(
+              (card) =>
+                card.type === "sauce" && (
+                  <Ingredient
+                    key={card._id}
+                    type={card.type}
+                    ingredient={card}
+                  />
+                )
             )}
           </ul>
         </div>
-        <div className={ingredientsSt.menu__category}>
+        <div className={ingredientsSt.menu__category} ref={fillingsTitleRef}>
           <h3>Начинки</h3>
           <ul className={`${ingredientsSt.menu__list}`}>
-            {props.data.map(
-              (card, index) => card.type === "main" && cardTemplate(card, index)
+            {ingredients.map(
+              (card) =>
+                card.type === "main" && (
+                  <Ingredient
+                    key={card._id}
+                    type={card.type}
+                    ingredient={card}
+                  />
+                )
             )}
           </ul>
         </div>
       </div>
-      {modal && (
-        <Modal modalState={modalState}>
-          <IngredientDetails cardId={cardId} data={props.data} />
+      {/* {ingredient && (
+        <Modal onClose={closeIngredientModal}>
+          <IngredientDetails cardId={ingredient._id} />
         </Modal>
-      )}
+      )} */}
     </div>
   );
 }
-BurgerIngredients.propTypes = {
-  handleOpenModal: PropTypes.func.isRequired,
-  modalState: PropTypes.func.isRequired,
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      calories: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      proteins: PropTypes.number.isRequired,
-      type: PropTypes.string.isRequired,
-      __v: PropTypes.number,
-      _id: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};
+
 export default BurgerIngredients;
