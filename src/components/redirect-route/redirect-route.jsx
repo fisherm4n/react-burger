@@ -9,11 +9,7 @@ const RedirectRoute = ({ children }) => {
   const location = useLocation();
   const pathName =
     location.state && location.state.from ? location.state.from.pathname : "/";
-  console.log(pathName);
-  console.log(userInfo);
   React.useEffect(() => {
-    console.log("Я в логине");
-    console.log("RedirectRoute");
     dispatch(getUser(getCookie("accessToken")));
   }, []);
   if (!userIsLoaded) {

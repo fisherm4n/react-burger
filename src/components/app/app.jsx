@@ -27,8 +27,6 @@ function App() {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  console.log(history);
-  console.log(location);
   const { ingredients, isLoading, hasError } = useSelector(
     (store) => store.ingredients
   );

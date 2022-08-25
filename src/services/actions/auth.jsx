@@ -31,7 +31,6 @@ export function registerRequest(registerBody) {
     })
       .then(checkResponse)
       .then((data) => {
-        console.log(data);
         if (data && data.success) {
           const accessToken = data.accessToken.split("Bearer ")[1];
           const refreshToken = data.refreshToken;
@@ -46,7 +45,6 @@ export function registerRequest(registerBody) {
         }
       })
       .catch((err) => {
-        console.log(err);
         dispatch({
           type: REGISTER_USER_FAILED,
         });
@@ -138,7 +136,6 @@ export const getUser = (token) => {
       .then(checkResponse)
       .then((data) => {
         if (data && data.success) {
-          console.log("Получаю ли я юзера?", data.user);
           dispatch({ type: USER_INFO_SUCCESS, payload: data.user });
         }
       })
@@ -224,29 +221,26 @@ export function changeUserInfo(changedBody) {
 }
 export function logOut() {
   return function (dispatch) {
-    console.log("До");
-    fetch(`${API}/auth/token`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        token: getCookie("refreshToken"),
-      }),
+    fetch(`${API}/auth/logout`, {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            token: getCookie("refreshToken"),
+        }),
     })
-      .then(checkResponse)
-      .then((res) => {
-        console.log("второй зен");
-
-        if (res && res.success) {
-          deleteCookie("accessToken");
-          deleteCookie("refreshToken");
-          dispatch({ type: LOGOUT_USER });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then(checkResponse)
+        .then((res) => {
+            if (res && res.success) {
+                deleteCookie("accessToken");
+                deleteCookie("refreshToken");
+                dispatch({ type: LOGOUT_USER });
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
   };
 }

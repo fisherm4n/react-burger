@@ -7,7 +7,6 @@ const ProtectedRoute = ({ children }) => {
   const { userIsLoaded, userInfo } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   React.useEffect(() => {
-    console.log("ProtectedRoute");
 
     dispatch(getUser(getCookie("accessToken")));
   }, []);

@@ -13,15 +13,17 @@ export function ProfilePage() {
   const { userInfo, userInfoRequest } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const [values, setValues] = useState({
-    name: "",
-    email: "",
+    name: "Имя",
+    email: "E-mail",
   });
   useEffect(() => {
+
     setValues({
       ...values,
       name: userInfo.name,
       email: userInfo.email,
     });
+    console.log(values);
   }, [userInfo]);
   useEffect(() => {
     !userInfoRequest && setIsEdit(false);
@@ -97,7 +99,6 @@ export function ProfilePage() {
         <Input
           type={"password"}
           placeholder={"Пароль"}
-          value={values.password}
           onChange={handleChangeValues}
           icon={"LockIcon"}
           name={"password"}

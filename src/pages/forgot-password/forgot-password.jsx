@@ -27,7 +27,6 @@ export function ForgotPasswordPage() {
           },
       });
     }
-    console.log(history);
   }, [email, requestStatus, history]);
   return (
     <>
