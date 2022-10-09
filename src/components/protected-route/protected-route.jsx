@@ -6,9 +6,7 @@ import { getCookie } from "../../utils/utils";
 const ProtectedRoute = ({ children }) => {
   const { userIsLoaded, userInfo } = useSelector((store) => store.user);
   const dispatch = useDispatch();
-  const location = useLocation();
   React.useEffect(() => {
-    console.log("ProtectedRoute");
 
     dispatch(getUser(getCookie("accessToken")));
   }, []);

@@ -26,48 +26,46 @@ export function RegistrationPage() {
     name: name,
   };
   return (
-    <>
-      <div className={styles.container}>
-        <h1 className="text text_type_main-medium mb-6">Регистрация</h1>
-        <form
-          id="registration-form"
-          className={styles.form}
-          onSubmit={(e) => registerNewUser(e, body)}
+    <div className={styles.container}>
+      <h1 className="text text_type_main-medium mb-6">Регистрация</h1>
+      <form
+        id="registration-form"
+        className={styles.form}
+        onSubmit={(e) => registerNewUser(e, body)}
+      >
+        <Input
+          name={"name"}
+          onChange={(e) => onChange(e, nameSet)}
+          value={name}
+          placeholder={"Имя"}
+        />
+        <Input
+          type="email"
+          onChange={(e) => onChange(e, emailSet)}
+          value={email}
+          name="email"
+          placeholder={"E-mail"}
+        />
+        <PasswordInput
+          onChange={(e) => onChange(e, passwordSet)}
+          value={password}
+          name="password"
+        />
+        <Button type="primary" size="large">
+          Зарегистрироваться
+        </Button>
+      </form>
+      <div className={styles.container_text}>
+        <span className="text text_type_main-small text_color_inactive">
+          Уже зарегистрированы?{" "}
+        </span>
+        <Link
+          to="/login"
+          className={`${styles.link} text text_type_main-small`}
         >
-          <Input
-            name={"name"}
-            onChange={(e) => onChange(e, nameSet)}
-            value={name}
-            placeholder={"Имя"}
-          />
-          <Input
-            type="email"
-            onChange={(e) => onChange(e, emailSet)}
-            value={email}
-            name="email"
-            placeholder={"E-mail"}
-          />
-          <PasswordInput
-            onChange={(e) => onChange(e, passwordSet)}
-            value={password}
-            name="password"
-          />
-          <Button type="primary" size="large">
-            Зарегистрироваться
-          </Button>
-        </form>
-        <div className={styles.container_text}>
-          <span className="text text_type_main-small text_color_inactive">
-            Уже зарегистрированы?{" "}
-          </span>
-          <Link
-            to="/login"
-            className={`${styles.link} text text_type_main-small`}
-          >
-            Войти
-          </Link>
-        </div>
+          Войти
+        </Link>
       </div>
-    </>
+    </div>
   );
 }

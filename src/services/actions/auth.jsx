@@ -1,5 +1,10 @@
 import { API } from ".";
-import { setCookie, getCookie, deleteCookie } from "../../utils/utils";
+import {
+  setCookie,
+  getCookie,
+  deleteCookie,
+  checkResponse,
+} from "../../utils/utils";
 export const LOGIN_USER = "LOGIN_USER";
 export const LOGIN_USER_SUCCESS = "LOGIN_USER_SUCCESS";
 export const LOGIN_USER_FAILED = "LOGIN_USER_FAILED";
@@ -14,14 +19,7 @@ export const CLEAR_USER_INFO = "CLEAR_USER_INFO";
 export const REGISTER_USER = "REGISTER_USER";
 export const REGISTER_USER_SUCCESS = "REGISTER_USER_SUCCESS";
 export const REGISTER_USER_FAILED = "REGISTER_USER_FAILED";
-const checkResponse = async (response) => {
-  if (response.ok) {
-    return response.json();
-  } else {
-    const message = await response.json().then((err) => err.message);
-    return Promise.reject({ status: response.status, message });
-  }
-};
+
 export function registerRequest(registerBody) {
   return function (dispatch) {
     fetch(`${API}/auth/register`, {
@@ -31,9 +29,8 @@ export function registerRequest(registerBody) {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then((res) => checkResponse(res))
+      .then(checkResponse)
       .then((data) => {
-        console.log(data);
         if (data && data.success) {
           const accessToken = data.accessToken.split("Bearer ")[1];
           const refreshToken = data.refreshToken;
@@ -48,7 +45,6 @@ export function registerRequest(registerBody) {
         }
       })
       .catch((err) => {
-        console.log(err);
         dispatch({
           type: REGISTER_USER_FAILED,
         });
@@ -74,7 +70,7 @@ export const loginRequest = (form) => {
       referrerPolicy: "no-referrer",
       body: JSON.stringify(form),
     })
-      .then((res) => checkResponse(res))
+      .then(checkResponse)
       .then((data) => {
         if (data.success) {
           const accessToken = data.accessToken.split("Bearer ")[1];
@@ -113,7 +109,7 @@ export async function forgotPasswordRequest(email) {
       email: email,
     }),
   })
-    .then((res) => checkResponse(res))
+    .then(checkResponse)
     .catch((err) => console.log(err));
 }
 export function resetPassword(form) {
@@ -124,7 +120,7 @@ export function resetPassword(form) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(form),
-  }).then((res) => checkResponse(res));
+  }).then(checkResponse);
 }
 export const getUser = (token) => {
   return function (dispatch) {
@@ -137,10 +133,9 @@ export const getUser = (token) => {
       },
       credentials: "same-origin",
     })
-      .then((res) => checkResponse(res))
+      .then(checkResponse)
       .then((data) => {
         if (data && data.success) {
-          console.log("Получаю ли я юзера?", data.user);
           dispatch({ type: USER_INFO_SUCCESS, payload: data.user });
         }
       })
@@ -156,7 +151,7 @@ export const getUser = (token) => {
             token: getCookie("refreshToken"),
           }),
         })
-          .then((res) => checkResponse(res))
+          .then(checkResponse)
           .then((res) => {
             if (res && res.success) {
               const accessToken = res.accessToken.split("Bearer ")[1];
@@ -207,7 +202,7 @@ export function changeUserInfo(changedBody) {
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
     })
-      .then((res) => checkResponse(res))
+      .then(checkResponse)
       .then((res) => {
         if (res && res.success) {
           dispatch({
@@ -226,29 +221,26 @@ export function changeUserInfo(changedBody) {
 }
 export function logOut() {
   return function (dispatch) {
-    console.log("До");
-    fetch(`${API}/auth/token`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        token: getCookie("refreshToken"),
-      }),
+    fetch(`${API}/auth/logout`, {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            token: getCookie("refreshToken"),
+        }),
     })
-      .then((res) => checkResponse(res))
-      .then((res) => {
-        console.log("второй зен");
-
-        if (res && res.success) {
-          deleteCookie("accessToken");
-          deleteCookie("refreshToken");
-          dispatch({ type: LOGOUT_USER });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then(checkResponse)
+        .then((res) => {
+            if (res && res.success) {
+                deleteCookie("accessToken");
+                deleteCookie("refreshToken");
+                dispatch({ type: LOGOUT_USER });
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
   };
 }

@@ -69,24 +69,15 @@ function BurgerConstructorItem(props) {
   drag(drop(ref));
 
   return (
-    <li ref={ref} draggable className={constructorSt.order_main} style={{}}>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "10px",
-          width: "100%",
-        }}
-      >
-        <DragIcon type="primary" />
-        <ConstructorElement
-          isLocked={false}
-          text={props.item.name}
-          price={props.item.price}
-          thumbnail={props.item.image}
-          handleClose={(e) => deleteIngredientFromConstructor(e, props.item)}
-        />
-      </div>
+    <li ref={ref} draggable className={constructorSt.order_main}>
+      <DragIcon type="primary" />
+      <ConstructorElement
+        isLocked={false}
+        text={props.item.name}
+        price={props.item.price}
+        thumbnail={props.item.image}
+        handleClose={(e) => deleteIngredientFromConstructor(e, props.item)}
+      />
     </li>
   );
 }

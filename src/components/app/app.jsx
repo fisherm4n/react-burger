@@ -13,14 +13,20 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useSelector, useDispatch } from "react-redux";
-import { Switch, Route, useHistory, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import RedirectRoute from "../redirect-route/redirect-route";
 import ProtectedRoute from "../protected-route/protected-route";
+
 function App() {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-
   const { ingredients, isLoading, hasError } = useSelector(
     (store) => store.ingredients
   );

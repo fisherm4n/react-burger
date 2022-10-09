@@ -76,3 +76,6 @@ body {
 .constructor-element {
   max-width: 548px !important;
 }
+.noselect{
+    width: 100%;
+}

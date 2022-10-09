@@ -10,7 +10,6 @@
     "@types/jest": "^27.5.2",
     "@types/node": "^16.11.41",
     "@types/react": "^18.0.14",
-    "@types/react-dom": "^18.0.5",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.13.1",
     "link-react": "^3.0.0",
     "react": "^18.2.0",
@@ -48,5 +47,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-dom": "^18.0.6",
+    "@types/react-router": "^5.1.18",
+    "@types/react-router-dom": "^5.3.3"
   }
 }

@@ -83,6 +83,9 @@
   position: relative;
   width: 100%;
   margin: 0 33px 15px auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .menu__category {

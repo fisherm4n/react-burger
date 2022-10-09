@@ -1,5 +1,5 @@
 import { API } from "./index.jsx";
-
+import { checkResponse } from "../../utils/utils.js";
 export const GET_INGREDIENTS = "GET_INGREDIENTS";
 export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED";
 export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
@@ -24,12 +24,7 @@ export const CLOSE_MODAL_INGREDIENT = "CLOSE_MODAL_INGREDIENT";
 export const OPEN_MODAL_INGREDIENT = "OPEN_MODAL_INGREDIENT";
 export const OPEN_MODAL_ORDER = "OPEN_MODAL_ORDER";
 export const CLOSE_MODAL_ORDER = "CLOSE_MODAL_ORDER";
-const checkResponse = (res) => {
-  if (res && res.ok) {
-    return res.json();
-  }
-  return Promise.reject(new Error(res.statusText));
-};
+
 export const getIngredients = () => (dispatch) => {
   dispatch({
     type: GET_INGREDIENTS,
