@@ -1,11 +1,14 @@
-export function getCookie(name) {
+import { store } from "../services/store.js";
+import { Dispatch } from "redux";
+
+export function getCookie(name:string ) {
   const matches = document.cookie.match(
     new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function setCookie(name, value, props) {
+export function setCookie(name:string, value:string, props?:any) {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {
@@ -28,14 +31,19 @@ export function setCookie(name, value, props) {
   document.cookie = updatedCookie;
 }
 
-export function deleteCookie(name) {
-  setCookie(name, null, { expires: -1 });
+export function deleteCookie(name:string) {
+  setCookie(name, "", { expires: -1 });
 }
-export const checkResponse = async (response) => {
+export const checkResponse = async (response:any) => {
+    console.log(response,'response');
+    
   if (response.ok) {
     return response.json();
   } else {
-    const message = await response.json().then((err) => err.message);
+    const message = await response.json().then((err:any) => err.message);
     return Promise.reject({ status: response.status, message });
   }
 };
+export const dispatchStore = store.dispatch as
+    | typeof store.dispatch
+    | Dispatch<any>;
