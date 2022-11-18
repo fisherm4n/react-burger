@@ -34,7 +34,7 @@ export function setCookie(name:string, value:string, props?:any) {
 export function deleteCookie(name:string) {
   setCookie(name, "", { expires: -1 });
 }
-export const checkResponse = async (response:any) => {
+export const checkResponse = async (response:Response ) => {
     console.log(response,'response');
     
   if (response.ok) {

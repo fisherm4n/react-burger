@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { loginRequest } from "../../services/actions/auth";
+import useForm from "../../hooks/useForm";
+
 import styles from "./login.module.css";
 import {
     Input,
@@ -10,15 +12,11 @@ import {
 import { dispatchStore } from "../../utils/utils";
 
 export function LoginPage() {
-    const [emailValue, setEmail] = useState("");
-    const [passwordValue, setPassword] = useState("");
-    const formBody = {
-        email: emailValue,
-        password: passwordValue,
-    };
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>, set: any) => {
-        set(e.target.value);
-    };
+    const { values, handleChange } = useForm({
+        email: "",
+        password: "",
+    });
+
     const sendRequest = (
         e: React.FormEvent<HTMLFormElement>,
         formBody: { email: string; password: string }
@@ -35,18 +33,18 @@ export function LoginPage() {
             <form
                 id="login-form"
                 className={styles.form}
-                onSubmit={(e) => sendRequest(e, formBody)}
+                onSubmit={(e) => sendRequest(e, values)}
             >
                 <Input
                     type="email"
-                    onChange={(e) => onChange(e, setEmail)}
+                    onChange={handleChange}
                     name="email"
-                    value={emailValue}
+                    value={values.email}
                     placeholder={"E-mail"}
                 />
                 <PasswordInput
-                    value={passwordValue}
-                    onChange={(e) => onChange(e, setPassword)}
+                    value={values.password}
+                    onChange={handleChange}
                     name={"password"}
                 />
                 <Button type="primary" size="large">
