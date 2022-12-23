@@ -1,3 +1,7 @@
+import { store } from "../services/store";
+import { Action, ActionCreator } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+
 export type TBurgerConstructorItem = {
     item: TIngredient;
     uid: number;
@@ -22,3 +26,21 @@ export type TForm = {
     email: string;
     password: string;
 }
+export interface IFeedList {
+  pageType?: string
+}
+export type TOrder = {
+  ingredients: Array<string>,
+  _id: string,
+  status: string,
+  number: number,
+  createdAt: string,
+  updatedAt: string,
+  name: string
+}
+export interface IOrderComposition {
+  item: TIngredient,
+  order: TOrder
+}
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>; 

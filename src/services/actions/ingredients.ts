@@ -13,7 +13,7 @@ export const ADD_BUN_TO_CONSTRUCTOR = "ADD_BUN_TO_CONSTRUCTOR";
 export const ADD_INGREDIENT_TO_CONSTRUCTOR = "ADD_INGREDIENT_TO_CONSTRUCTOR";
 export const DELETE_INGREDIENT_FROM_CONSTRUCTOR =
     "DELETE_INGREDIENT_FROM_CONSTRUCTOR";
-
+export const GET_ORDER_BY_NUMBER = "GET_ORDER_BY_NUMBER";
 export const CHANGE_MODAL_STATUS = "CHANGE_MODAL_STATUS";
 export const SORT_INGREDIENTS = "SORT_INGREDIENTS";
 export const GET_ORDER_NUMBER_REQUEST = "GET_ORDER_NUMBER_REQUEST";
@@ -87,7 +87,21 @@ export function getOrderNumber(ingredients:object[]) {
             });
     };
 }
+export const getOrderByNumber = (number: any) => {
+    return function (dispatch: Dispatch) {
+    fetch(`${API}/orders/${number}`)
+    .then(checkResponse)
+      .then((res) => {
+        if(res && res.success) {
+          dispatch({type:GET_ORDER_BY_NUMBER,payload: res.orders[0]})
 
+        }
+      })
+      .catch(err => {
+        return err;
+      })
+  }
+  };
 export const replaceItems = (dragIndex:string, hoverIndex:string) => {
     return (dispatch:Dispatch) => {
         dispatch({
