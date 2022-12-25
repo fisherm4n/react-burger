@@ -6,7 +6,7 @@ import { getUser } from "../../services/actions/auth";
 import { dispatchStore, getCookie } from "../../utils/utils";
 const ProtectedRoute: React.FC<{
     children: any;
-    exact: true;
+    exact?: true;
     path: string;
 }> = ({ children }) => {
     const { userIsLoaded, userInfo } = useSelector((store: any) => store.user);

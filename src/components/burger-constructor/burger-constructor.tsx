@@ -1,3 +1,5 @@
+import React, { useMemo } from "react";
+
 import constructorSt from "./burger-constructor.module.css";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
@@ -6,7 +8,6 @@ import {
     ConstructorElement,
     Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useMemo } from "react";
 import {
     ADD_INGREDIENT_TO_CONSTRUCTOR,
     ADD_BUN_TO_CONSTRUCTOR,
@@ -14,7 +15,6 @@ import {
 import { useDrop } from "react-dnd";
 
 import { useSelector, useDispatch } from "react-redux";
-// import { handleChangeStatusModal } from "../../services/actions/popup";
 import BurgerConstructorItem from "./burger-constructor-item";
 import { v4 as uuidv4 } from "uuid";
 import { getOrderNumber } from "../../services/actions/ingredients";
