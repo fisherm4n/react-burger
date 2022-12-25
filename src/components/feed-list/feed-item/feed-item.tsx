@@ -43,9 +43,7 @@ export function FeedItem({ order }: { order: TOrder }) {
 
     const hiddeIngredients =
         uniqIngredients.length > 5 ? uniqIngredients.length - 5 : 0;
-    function handleClickOnOrder() {
-        history.push(`${location.pathname}/${order.number}`);
-    }
+
     React.useEffect(() => {
         order.status === "done" && setStatus("Выполнен");
         order.status === "created" && setStatus("Создан");
@@ -53,12 +51,11 @@ export function FeedItem({ order }: { order: TOrder }) {
     }, [order.status]);
     return (
         <Link
-            to={{
-                // Тут мы формируем динамический путь для нашего ингредиента
-                // а также сохраняем в свойство background роут, на котором была открыта наша модалка
-                pathname: `/feed/${order.number}`,
+            to={(location) => ({
+                ...location,
                 state: { background: location },
-            }}
+                pathname: `${location.pathname}/${order.number}`,
+            })}
         >
             <div className={style.wrapper}>
                 <div className={style.info}>

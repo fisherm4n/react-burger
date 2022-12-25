@@ -81,9 +81,6 @@ function App() {
                                         <Route path="/feed" exact>
                                             <Feed />
                                         </Route>
-                                        <ProtectedRoute exact path="/profile">
-                                            <ProfilePage />
-                                        </ProtectedRoute>
 
                                         <Route
                                             path="/ingredients/:ingredientId"
@@ -94,9 +91,31 @@ function App() {
                                         <Route path="/feed/:number" exact>
                                             <OrderDetailsPage />
                                         </Route>
+                                        <ProtectedRoute
+                                            exact
+                                            path="/profile/orders/:number"
+                                        >
+                                            <OrderDetailsPage />
+                                        </ProtectedRoute>
+                                        <ProtectedRoute path="/profile">
+                                            <ProfilePage />
+                                        </ProtectedRoute>
                                     </Switch>
                                     {background && (
                                         <Switch>
+                                            <Route
+                                                path="/profile/orders/:number"
+                                                exact
+                                                children={
+                                                    <Modal
+                                                        onClose={
+                                                            handleModalClose
+                                                        }
+                                                    >
+                                                        <OrderDetailsPage />
+                                                    </Modal>
+                                                }
+                                            />
                                             <Route
                                                 path="/feed/:number"
                                                 exact
@@ -120,20 +139,6 @@ function App() {
                                                         }
                                                     >
                                                         <IngredientDetails />
-                                                    </Modal>
-                                                }
-                                            />
-
-                                            <Route
-                                                path="/profile/orders/:number"
-                                                exact
-                                                children={
-                                                    <Modal
-                                                        onClose={
-                                                            handleModalClose
-                                                        }
-                                                    >
-                                                        <OrderDetailsPage />
                                                     </Modal>
                                                 }
                                             />

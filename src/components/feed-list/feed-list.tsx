@@ -25,6 +25,8 @@ export const FeedList: FC<IFeedList> = ({ pageType }) => {
         pageType === "orders" ? style.orders_wrapper : style.wrapper;
     const generalOrdersArr = useMemo(() => orders?.orders, [orders.orders]);
     const userOrdersArr = useMemo(() => userOrders, [userOrders]);
+    console.log(location);
+
     useEffect(() => {
         if (location.pathname === "/profile/orders") {
             dispatch({
@@ -59,10 +61,16 @@ export const FeedList: FC<IFeedList> = ({ pageType }) => {
                     <ul className={style.list}>
                         {location.pathname === "/profile/orders"
                             ? userOrders?.map((order: TOrder) => {
-                                  return "asd";
+                                  console.log("asd");
+
+                                  return (
+                                      <FeedItem key={order._id} order={order} />
+                                  );
                               })
                             : generalOrdersArr?.map((order: TOrder) => {
-                                  return <FeedItem order={order} />;
+                                  return (
+                                      <FeedItem key={order._id} order={order} />
+                                  );
                               })}
                     </ul>
                 </div>
